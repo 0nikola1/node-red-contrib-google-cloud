@@ -43,7 +43,7 @@ module.exports = function(RED) {
                 credentials = GetCredentials(config.account);
             }
             catch(error) {
-                node.error('Unable to retrieve credentials, please check account details');
+                node.warn('Unable to retrieve credentials, please check account details');
                 return;
             }
         }
@@ -72,11 +72,11 @@ module.exports = function(RED) {
                     if ((typeof msg.payload === 'string' || msg.payload instanceof String) && msg.payload.trim().length > 0) {
                         query = msg.payload;
                     } else {
-                        node.error('No static query and no string msg.payload to use as a query.');
+                        node.warn('No static query and no string msg.payload to use as a query.');
                         return;
                     }
                 } else {
-                    node.error('No query found to execute.');
+                    node.warn('No query found to execute.');
                     return;
                 }
             } 
@@ -86,7 +86,7 @@ module.exports = function(RED) {
                 const results = await bigquery.query(query);
             }
             catch(error) {
-                node.error('Error, unable to execute query.');
+                node.warn('Error, unable to execute query.');
                 return;
             }
             
